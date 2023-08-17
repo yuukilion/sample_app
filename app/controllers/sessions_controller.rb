@@ -3,12 +3,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:sessions][:email].downcase)
+    user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:sessions][:password])
       #todo
     else
       #エラーメッセージを追加
-      flash[:danger] = "todo"
+      flash.now[:danger] = "todo"
       render 'new', status: :unprocessable_entity
     end
   end
