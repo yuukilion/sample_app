@@ -50,6 +50,6 @@ class User < ApplicationRecord
 
     def create_activation_digest
       self.activation_token  = User.new_token
-      self.actication_digest = User.digest(self.activation_token)
+      self.activation_digest = User.digest(self.activation_token)
     end
 end
