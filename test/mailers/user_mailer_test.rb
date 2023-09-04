@@ -7,7 +7,7 @@ class UserMailerTest < ActionMailer::TestCase
     mail = UserMailer.account_activation(user)
     assert_equal "【SampleApp】アカウント有効化のお願い", mail.subject
     assert_equal [user.email], mail.to
-    assert_equal ["user@realdomain.com"], mail.from
+    assert_equal ["sampleTarou123456@gmail.com"], mail.from
     assert_match user.name, mail.body.encoded
     assert_match user.activation_token, mail.body.encoded
     assert_match CGI.escape(user.email), mail.body.encoded
