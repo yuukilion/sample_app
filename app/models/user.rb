@@ -62,6 +62,7 @@ class User < ApplicationRecord
     UserMailer.account_activation(self).deliver_now
   end
 
+
   def create_reset_digest
     self.reset_token = User.new_token
     update_attribute(:reset_digest, User.digest(reset_token))
@@ -77,7 +78,9 @@ class User < ApplicationRecord
   end
 
   def feed
-    Micropost.where("user_id = ?", id)
+    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+             .includes(:user, image_attachment: :blob)
   end
 
   def follow(other_user)
