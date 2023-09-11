@@ -3,6 +3,8 @@ class UsersController < ApplicationController
   before_action :correct_user, only:[:edit, :update]
   before_action :admin_user, only:[:destroy]
 
+  WEBHOOK_URL = ENV['SLACK_WEBHOOK_URL'] 
+
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
@@ -43,9 +45,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
+    delete_user = User.find(params[:id])
+    user_name = delete_user.name
+    delete_user.destroy
     flash[:success] = "User deleted"
     redirect_to users_url, status: :see_other
+    notifier.ping("ユーザーが削除されました。user_name: #{user_name}")
   end
 
   def following
@@ -77,5 +82,9 @@ class UsersController < ApplicationController
 
     def admin_user
       redirect_to(root_url, status: :see_other) unless current_user.admin?
+    end
+
+    def notifier
+      Slack::Notifier.new(WEBHOOK_URL, username: 'dojomaru', icon_emoji: ':sunglasses:')
     end
 end
