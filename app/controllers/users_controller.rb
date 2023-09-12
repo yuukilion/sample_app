@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :correct_user, only:[:edit, :update]
   before_action :admin_user, only:[:destroy]
 
-  WEBHOOK_URL = ENV['SLACK_WEBHOOK_URL'] 
+  WEBHOOK_URL = Rails.application.credentials[:webhook_url]
 
   def show
     @user = User.find(params[:id])
