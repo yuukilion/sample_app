@@ -22,6 +22,10 @@ test:
 
 production:
   <<: *default
-  adapter: postgresql
+  adapter: mysql2
+  reconnect: false
   encoding: unicode
   url: <%= ENV['DATABASE_URL'] %>
+  username: sampleapp
+  password: <%ENV['AWS_SAMPLE_DATABASE_PASSWORD']%>
+  host: db.home
