@@ -66,15 +66,16 @@ Rails.application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  host = 'sample-app-jrgj.onrender.com'
+  host = ENV['AWS_SAMPLE_APP_HOST']
   config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.smtp_settings = {
-    :port           => 587,
-    :address        => 'smtp.mailgun.org',
-    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => host,
+    :port           => 465,
+    :address        => ENV['AWS_SAMPLE_SMTP_ADDRESS'],
+    :user_name      => ENV['AWS_SAMPLW_SMTP_USERNAME'],
+    :password       => ENV['AWS_SAMPLE_SMTP_PASSWORD'],
+    :domain         => ENV['AWS_SAMPLE_SMTP_DOMAIN'],
     :authentication => :plain,
+    :ssl           => true
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
