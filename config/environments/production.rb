@@ -3,6 +3,12 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  credentials = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+  AWS::Rails.add_action_mailer_delevery_method(
+    :ses,
+    credentials,
+    reqion: ENV['AWS_REGION']
+  )
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -65,7 +71,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :ses
   host = ENV['AWS_SAMPLE_APP_HOST']
   config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.smtp_settings = {
