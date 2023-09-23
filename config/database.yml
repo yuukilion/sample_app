@@ -23,8 +23,9 @@ test:
 production:
   <<: *default
   adapter: mysql2
+  database: sample_app
   reconnect: false
   encoding: utf8mb4
-  username: sampleapp
-  password: <%ENV['AWS_SAMPLE_DATABASE_PASSWORD']%>
+  username: sample_app
+  password: <%=ENV['AWS_SAMPLE_DATABASE_PASSWORD']%>
   host: db.home
