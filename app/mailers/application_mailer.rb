@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "sampleTarou123456@gmail.com"
+  default from: "noreply@#{ENV['AWS_SAMPLE_SMTP_DOMAIN']}"
   layout "mailer"
 end

@@ -4,9 +4,9 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   credentials = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
-  AWS::Rails.add_action_mailer_delevery_method(
+  Aws::Rails.add_action_mailer_delivery_method(
     :ses,
-    credentials,
+    credentials: credentials,
     reqion: ENV['AWS_REGION']
   )
   # Code is not reloaded between requests.
